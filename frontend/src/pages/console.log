@@ -1,0 +1,16 @@
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const { data } = await api.post("/auth/login", formData);
+    console.log("✅ API Response:", data);  // ← add this
+    login(data.token, data.user);
+    console.log("✅ Login called");         // ← add this
+    navigate("/chat");
+  } catch (err) {
+    console.log("❌ Error:", err);          // ← add this
+    setError(err.response?.data?.error || "Login failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
